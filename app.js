@@ -23,4 +23,9 @@ app.post('/myset', (req, res) => {
 }) 
 
 //register a member into a set
- 
+  app.post('/myset/:mysetId/members', (req, res) => {
+    (new member ({ 'name': req.body.name, 'lastName': req.body.lastName, '_setId' : req.params.mysetId }))
+.save()
+.then((member) => res.send(member))
+.catch((error) => console.log(error))
+})

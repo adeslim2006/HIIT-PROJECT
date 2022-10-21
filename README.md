@@ -1,3 +1,3 @@
-# backend
+# HIIT - PROJECT
 
-A club membership app involving CRUD operations using NodeJS, ExpressJS, and MongoDB.
+A club membership app with simple CRUD operations using Javascript, NodeJS, ExpressJS, and MongoDB.

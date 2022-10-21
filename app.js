@@ -3,6 +3,7 @@ const app = express()
 const mongoose = require('./clubdb/clubdbmodel/mongoose')
 const myset = require('./clubdb/clubdbmodel/set')
 const member = require('./clubdb/clubdbmodel/Member')
+const { findOneAndDelete } = require('./clubdb/clubdbmodel/set')
 
 app.listen(5000, () => console.log("Listening on port 5000"))
 app.use(express.json())
@@ -89,3 +90,33 @@ app.patch('/myset/:mysetId/members/:memberId', (req, res) => {
     .catch((error) => console.log(error))
     
     })
+
+//delete a set from the DB
+
+app.delete('/myset/:mysetId', (req, res) =>{
+
+    const deleteMembers = (myset) =>{
+    
+    member.deleteMany({ '_id': req.params.mysetId})
+    
+    .then(() => myset)
+    
+    .catch((error) => console.log(error))
+    
+    }
+    
+    myset.findByIdAndDelete( { '_id': req.params.mysetId})
+    
+    .then((myset) => res.send(deleteMembers(myset)))
+    
+    .catch((error) => console.log(error))
+    
+    })
+
+// delete a member from any set in the DB
+app.delete('/myset/:mysetId/members/:memberId', (req, res) => {
+    member.findOneAndDelete({ _id: req.params.memberId, _setId: req.params.mysetId })
+    .then((member) => res.send(member))
+    .catch((error) => console.log(error))
+    
+    })    
